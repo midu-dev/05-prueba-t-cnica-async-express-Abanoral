@@ -2,19 +2,34 @@ import net from 'node:net'
 import fs from 'node:fs'
 
 // # EJERCICIO 1
-export const ping = (ip) => {
-  const startTime = process.hrtime()
+// export const ping = (ip) => {
+//   const startTime = process.hrtime()
+
+//   const client = net.connect({ port: 80, host: ip }, () => {
+//     client.end()
+//     return { time: process.hrtime(startTime), ip }
+//   })
+  
+//   client.on('error', (err) => {
+//     client.end()
+//     throw err
+//   })
+// }
+export const ping = (ip, callback) => {
+  const startTime = process.hrtime();
 
   const client = net.connect({ port: 80, host: ip }, () => {
-    client.end()
-    return { time: process.hrtime(startTime), ip }
-  })
+    const time = process.hrtime(startTime);
+    const result = { time, ip };
+    callback(null, result);
+    client.end();
+  });
 
   client.on('error', (err) => {
-    throw err
-    client.end()
-  })
-}
+    callback(err, null);
+    client.end();
+  });
+};
 
 ping('midu.dev', (err, info) => {
   if (err) console.error(err)
@@ -22,10 +37,14 @@ ping('midu.dev', (err, info) => {
 })
 
 // # EJERCICIO 2
-export function obtenerDatosPromise (callback) {
-  setTimeout(() => {
-    callback(null, { data: 'datos importantes' })
-  }, 2000)
+export function obtenerDatosPromise(callback) {
+  return new Promise((resolve, reject) => {
+    try{
+      resolve( { data: 'datos importantes' })
+    }catch(err) {
+      reject(err)
+    }
+  })
 }
 
 // # EJERCICIO 3
