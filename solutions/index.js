@@ -37,28 +37,33 @@ export function obtenerDatosPromise (callback) {
 
 // # EJERCICIO 3
 // lee el archivo input.txt, guarda en una variable el contenido del archivo leído con el método readFile, este contenido lo transforma a mayúsculas. Esta variable, (contenido) la utiliza para escribir lo leído en otro archivo con el método writeFile, en este caso se escribe en el archivo output.txt.
-export function procesarArchivo () {
-  fs.readFile('input.txt', 'utf8', (error, contenido) => {
+export function procesarArchivo (callback) {
+  const handleError = (message, error) => {
+    console.error(message, error.message)
+    callback(error)
+  }
+
+  const sendResponse = (mensaje) => {
+    console.log(mensaje)
+    callback()
+  }
+
+  const writeFilePA = (error) => {
+    if (error) {
+      handleError('Error guardando archivo:', error)
+    }
+    sendResponse('Archivo procesado y guardado con éxito')
+  }
+
+  const readFilePA = (error, contenido) => {
     if (error) {
       handleError('Error leyendo archivo:', error)
-      return
     }
-
     const textoProcesado = contenido.toUpperCase()
+    fs.writeFile('output.txt', textoProcesado, writeFilePA)
+  }
 
-    fs.writeFile('output.txt', textoProcesado, error => {
-      if (error) {
-        handleError('Error guardando archivo:', error)
-        return
-      }
-
-      console.log('Archivo procesado y guardado con éxito')
-    })
-  })
-}
-
-function handleError (message, error) {
-  console.error(message, error.message)
+  fs.readFile('input.txt', 'utf8', readFilePA)
 }
 
 export async function procesarArchivoPromise () {

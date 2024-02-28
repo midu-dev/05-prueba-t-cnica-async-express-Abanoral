@@ -29,17 +29,17 @@ describe('3. procesarArchivoPromise', () => {
     } catch {}
   })
 
-  // it('3.1. procesarArchivo', (t, done) => {
-  //   writeFileSync('input.txt', 'gogogo')
-  //   procesarArchivo((err) => {
-  //     ifError(err)
-  //     readFile('output.txt', 'utf8')
-  //       .then((contenido) => {
-  //         equal(contenido, 'GOGOGO')
-  //         done()
-  //       })
-  //   })
-  // })
+  it('3.1. procesarArchivo', (t, done) => {
+    writeFileSync('input.txt', 'gogogo')
+    procesarArchivo((err) => {
+      ifError(err)
+      readFile('output.txt', 'utf8')
+        .then((contenido) => {
+          equal(contenido, 'GOGOGO')
+          done()
+        })
+    })
+  })
 
   it('3.1. procesarArchivoPromise', async () => {
     writeFileSync('input.txt', 'hola')

@@ -10,9 +10,13 @@ export class ItemModel {
     return items
   }
 
+  static async getById ({ id }) {
+    const itemIndex = items.findIndex(item => item.id === id)
+    return items[itemIndex]
+  }
+
   static async create ({ input }) {
     const newItem = {
-      // id: items.length + 1,
       id: randomUUID(),
       ...input
     }

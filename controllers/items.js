@@ -7,6 +7,12 @@ export class ItemController {
     res.json(items)
   }
 
+  static async getById (req, res) {
+    const { id } = req.params
+    const item = await ItemModel.getById({ id })
+    res.json(item)
+  }
+
   static async create (req, res) {
     const result = validateItem(req.body)
     if (result.error) {
