@@ -1,7 +1,9 @@
 {
   "name": "prueba-tecnica-javascript-node",
+  "main": "/solutions/server.js",
   "type": "module",
   "scripts": {
+    "dev": "node --watch ./solutions/server.js",
     "lint": "standard",
     "test": "node --test"
   },

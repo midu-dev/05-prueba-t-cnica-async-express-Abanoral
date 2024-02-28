@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto'
+
 const items = [{
   id: 1,
   content: 'Item 1'
@@ -9,13 +11,16 @@ export class ItemModel {
   }
 
   static async create ({ input }) {
-    const newItem = { ...input }
+    const newItem = {
+      // id: items.length + 1,
+      id: randomUUID(),
+      ...input
+    }
     items.push(newItem)
     return newItem
   }
 
-  static async updateItem ({ input }) {
-    const { id } = input
+  static async updateItem ({ id, input }) {
     const itemIndex = items.findIndex(item => item.id === id)
     if (itemIndex === -1) return false
     items[itemIndex] = [
