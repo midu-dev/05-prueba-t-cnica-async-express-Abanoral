@@ -1,13 +1,13 @@
-import express from 'express'
+import express, { json } from 'express'
+import { itemsRouter } from '../routes/items.js'
 
 export const app = express()
 app.use(express.json())
-
-const items = [{
-  id: 1,
-  content: 'Item 1'
-}]
+app.use(json())
 
 // EJERCICO 6 aquí
+app.use('/items', itemsRouter)
 
-export const server = app.listen(3000)
+const PORT = process.env.PORT ?? 3000
+
+export const server = app.listen(PORT)
